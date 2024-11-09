@@ -96,9 +96,9 @@ public class BuildModel {
         for(String state : transitions.keySet()){
             double total = transitionTotals.get(state);
             for(String next : transitions.get(state).keySet()){
-                double Tranfreq = transitions.get(state).get(next)/total;
-                double Tranlog = Math.log(Tranfreq);
-                transitions.get(state).put(next, Tranlog);
+                double tranFreq = transitions.get(state).get(next)/total;
+                double tranLog = Math.log(tranFreq);
+                transitions.get(state).put(next, tranLog);
             }
         }
 
@@ -106,9 +106,9 @@ public class BuildModel {
         for(String state : observations.keySet()){
             double total = observationTotals.get(state);
             for(String word : observations.get(state).keySet()){
-                double Obfreq = observations.get(state).get(word)/total;
-                double Oblog = Math.log(Obfreq);
-                observations.get(state).put(word, Oblog);
+                double obFreq = observations.get(state).get(word)/total;
+                double obLog = Math.log(obFreq);
+                observations.get(state).put(word, obLog);
             }
         }
     }
@@ -123,7 +123,7 @@ public class BuildModel {
 
     public static void main(String[] args) throws IOException{
         BuildModel fuckass = new BuildModel();
-        fuckass.count("texts/brown-test-sentences.txt", "texts/brown-test-tags.txt");
+        fuckass.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
         fuckass.normalize();
         System.out.println(fuckass.transitions);
         System.out.println(fuckass.transitionTotals);

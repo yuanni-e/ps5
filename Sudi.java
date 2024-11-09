@@ -9,6 +9,13 @@ public class Sudi {
 //    List<Map<String, List<Map<String, Double>>>>  list; //observations
 //    Map<String, Map<Double, String>> map; //transitions
 
+    private Map<String, Double> currScore;
+    private Map<String, Double> nextScore;
+    private Set<String> currState;
+    private Set<String> nextState;
+    private Map<String, String> track;
+    private List<Map<String, String>> trackList;
+    private List<String> backtrace;
 
     private Scanner in = new Scanner(System.in);
 
@@ -41,6 +48,14 @@ public class Sudi {
 
     }
 
-
+    //split strings into lists
+    //structures:
+    //currScore -> map string to double
+    //nextScore -> map string to double
+    //currState -> set
+    //nextState -> set
+    //Map track
+    //List of maps (list of track)
+    //ArrayList backtrace
 
 }
