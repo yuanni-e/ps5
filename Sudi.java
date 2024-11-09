@@ -71,17 +71,17 @@ public class Sudi {
         }
         sentence[0] = start;
 
-        for (String s : sentence){
-            double score = 0;
-                for (String tag : BuildModel.getObservations().keySet()){
-                    if (!BuildModel.getObservations().get(tag).containsKey(s)){
-                        score += unseenScore;
-                    }
-                }
-
-
-
-        }
+//        for (String s : sentence){
+//            double score = 0;
+//                for (String tag : BuildModel.getObservations().keySet()){
+//                    if (!BuildModel.getObservations().get(tag).containsKey(s)){
+//                        score += unseenScore;
+//                    }
+//                }
+//
+//
+//
+//        }
 
 
 
