@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.datastructures.HashTableMap;
-
 public class BuildModel {
 
     private String start = "#";
@@ -98,19 +96,27 @@ public class BuildModel {
         for(String state : transitions.keySet()){
             double total = transitionTotals.get(state);
             for(String next : transitions.get(state).keySet()){
-
+                double Tranfreq = transitions.get(state).get(next)/total;
+                double Tranlog = Math.log(Tranfreq);
+                transitions.get(state).put(next, Tranlog);
             }
         }
 
         //normalize observations map, which is assumed to have counts of appearance of observations
-        for(String word : observations.keySet()){
-
+        for(String state : observations.keySet()){
+            double total = observationTotals.get(state);
+            for(String word : observations.get(state).keySet()){
+                double Obfreq = observations.get(state).get(word)/total;
+                double Oblog = Math.log(Obfreq);
+                observations.get(state).put(word, Oblog);
+            }
         }
     }
 
     public static void main(String[] args) throws IOException{
         BuildModel fuckass = new BuildModel();
         fuckass.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
+        fuckass.normalize();
         System.out.println(fuckass.transitions);
         System.out.println(fuckass.transitionTotals);
         System.out.println(fuckass.observations);
