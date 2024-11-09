@@ -2,12 +2,17 @@ import java.util.*;
 
 public class Sudi {
     private final int unseenScore = -100;
-    String start = "#";
+    String start;
 
-    private Map<String, Double> currScores;
-    private Map<String, Double> nextScores;
-    private Set<String> currStates;
-    private Set<String> nextStates;
+    //list of observations which contain:  list of words to observation #, map of pos to transition # and
+    //next pos
+//    List<Map<String, List<Map<String, Double>>>>  list; //observations
+//    Map<String, Map<Double, String>> map; //transitions
+
+    private Map<String, Double> currScore;
+    private Map<String, Double> nextScore;
+    private Set<String> currState;
+    private Set<String> nextState;
     private Map<String, String> track;
     private List<Map<String, String>> trackList;
     private List<String> backtrace;
@@ -15,55 +20,11 @@ public class Sudi {
     private Scanner in = new Scanner(System.in);
 
     public Sudi(){
-        currScores = new HashMap<>();
-        currStates = new HashSet<>();
-        track = new HashMap<>();
-        trackList = new ArrayList<>();
-        backtrace = new ArrayList<>();
+//        list = new ArrayList<>();
+//        map = new HashMap<>();
     }
 
     public void POSViterbi(String line){
-        String[] splitLine = line.split(" ");
-//        String[] sentence = new String[splitLine.length + 1];
-//        for (int i = 1; i < splitLine.length; i++){
-//            sentence[i] = splitLine[i - 1];
-//        }
-//        sentence[0] = start;
-
-        currStates.add(start);
-        currScores.put(start, 0.0);
-
-        for (String word : splitLine){
-            for (int i = 0; i < trackList.size() - 1; i++){
-                nextScores = new HashMap<>();
-                nextStates = new HashSet<>();
-
-                for (String currState : currStates){
-                    for (String transition : BuildModel.getTransitions().get(currState).keySet()){
-                        nextStates.add(transition);
-                        double nextScore = 0;
-                        nextScore += BuildModel.getTransitions().get(currState).get(transition);
-                        nextScore += currScores.get(currState);
-                        if (!BuildModel.getObservations().get(currState).containsKey(word)){
-                            nextScore += unseenScore;
-                        }
-                        else {
-                            nextScore += BuildModel.getObservations().get(currState).get(word);
-                        }
-
-                        if (!nextScores.containsKey(transition) || nextScore > nextScores.get(transition)){
-                            nextScores.put(transition, nextScore);
-
-                        }
-                        currStates = nextStates;
-                        currScores = nextScores;
-                    }
-                }
-            }
-        }
-
-
-
         String[] splitLine = line.split(" ");
         String[] sentence = new String[splitLine.length + 1];
         for (int i = 1; i < splitLine.length; i++){
@@ -74,7 +35,7 @@ public class Sudi {
         for (String s : sentence){
             double score = 0;
                 for (String tag : BuildModel.getObservations().keySet()){
-                    if (!BuildModel.getObservations().get(tag).containsKey(s)){
+                    if (!.containsKey(tag)){
                         score += unseenScore;
                     }
                 }
@@ -87,6 +48,14 @@ public class Sudi {
 
     }
 
-
+    //split strings into lists
+    //structures:
+    //currScore -> map string to double
+    //nextScore -> map string to double
+    //currState -> set
+    //nextState -> set
+    //Map track
+    //List of maps (list of track)
+    //ArrayList backtrace
 
 }
