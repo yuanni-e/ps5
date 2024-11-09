@@ -113,9 +113,17 @@ public class BuildModel {
         }
     }
 
+    public Map<String, Map<String, Double>> getObservations() {
+        return observations;
+    }
+
+    public Map<String, Map<String, Double>> getTransitions() {
+        return transitions;
+    }
+
     public static void main(String[] args) throws IOException{
         BuildModel fuckass = new BuildModel();
-        fuckass.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
+        fuckass.count("texts/brown-test-sentences.txt", "texts/brown-test-tags.txt");
         fuckass.normalize();
         System.out.println(fuckass.transitions);
         System.out.println(fuckass.transitionTotals);
