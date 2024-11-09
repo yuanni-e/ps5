@@ -12,20 +12,19 @@ public class BuildModel {
     //string1 - tag; string2 - word categorized as tag; double - frequency of tag appearance for each word
     private static Map<String, Map<String, Double>> observations;
 
-    private Map<String, Double> transitionTotals;
-    private Map<String, Double> observationTotals;
+//    private Map<String, Double> transitionTotals;
+//    private Map<String, Double> observationTotals;
 
     public BuildModel(){
         transitions = new HashMap<String, Map<String, Double>>();
         observations = new HashMap<String, Map<String, Double>>();
-
-        transitionTotals = new HashMap<String, Double>();
-        observationTotals = new HashMap<String, Double>();
     }
 
     public void count(String sentenceFile, String tagFile) throws IOException {
         BufferedReader sentences = null;
         BufferedReader tags = null;
+        Map<String, Double> transitionTotals = new HashMap<String, Double>();
+        Map<String, Double> observationTotals = new HashMap<String, Double>();
         try {
             sentences = new BufferedReader(new FileReader(sentenceFile));
             tags = new BufferedReader(new FileReader(tagFile));
@@ -77,7 +76,30 @@ public class BuildModel {
                 }
                 tag = tags.readLine();
                 sentence = sentences.readLine();
+
             }
+            //normalize the counts in each map to frequencies
+            //normalize transitions map, which is assumed to have counts of appearance of transitions
+            //the double value in the map is updated
+            for(String state : transitions.keySet()){
+                double total = transitionTotals.get(state);
+                for(String next : transitions.get(state).keySet()){
+                    double tranFreq = transitions.get(state).get(next)/total;
+                    double tranLog = Math.log(tranFreq);
+                    transitions.get(state).put(next, tranLog);
+                }
+            }
+
+            //normalize observations map, which is assumed to have counts of appearance of observations
+            for(String state : observations.keySet()){
+                double total = observationTotals.get(state);
+                for(String word : observations.get(state).keySet()){
+                    double obFreq = observations.get(state).get(word)/total;
+                    double obLog = Math.log(obFreq);
+                    observations.get(state).put(word, obLog);
+                }
+            }
+
         } catch (IOException e) {
             System.out.println(e);
         } finally {
@@ -90,28 +112,28 @@ public class BuildModel {
         }
     }
 
-    public void normalize(){
-        //normalize transitions map, which is assumed to have counts of appearance of transitions
-        //the double value in the map is updated
-        for(String state : transitions.keySet()){
-            double total = transitionTotals.get(state);
-            for(String next : transitions.get(state).keySet()){
-                double tranFreq = transitions.get(state).get(next)/total;
-                double tranLog = Math.log(tranFreq);
-                transitions.get(state).put(next, tranLog);
-            }
-        }
-
-        //normalize observations map, which is assumed to have counts of appearance of observations
-        for(String state : observations.keySet()){
-            double total = observationTotals.get(state);
-            for(String word : observations.get(state).keySet()){
-                double obFreq = observations.get(state).get(word)/total;
-                double obLog = Math.log(obFreq);
-                observations.get(state).put(word, obLog);
-            }
-        }
-    }
+//    public void normalize(){
+//        //normalize transitions map, which is assumed to have counts of appearance of transitions
+//        //the double value in the map is updated
+//        for(String state : transitions.keySet()){
+//            double total = transitionTotals.get(state);
+//            for(String next : transitions.get(state).keySet()){
+//                double tranFreq = transitions.get(state).get(next)/total;
+//                double tranLog = Math.log(tranFreq);
+//                transitions.get(state).put(next, tranLog);
+//            }
+//        }
+//
+//        //normalize observations map, which is assumed to have counts of appearance of observations
+//        for(String state : observations.keySet()){
+//            double total = observationTotals.get(state);
+//            for(String word : observations.get(state).keySet()){
+//                double obFreq = observations.get(state).get(word)/total;
+//                double obLog = Math.log(obFreq);
+//                observations.get(state).put(word, obLog);
+//            }
+//        }
+//    }
 
     public static Map<String, Map<String, Double>> getObservations() {
         return observations;
@@ -124,10 +146,10 @@ public class BuildModel {
     public static void main(String[] args) throws IOException{
         BuildModel fuckass = new BuildModel();
         fuckass.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
-        fuckass.normalize();
+        //fuckass.normalize();
         System.out.println(fuckass.transitions);
-        System.out.println(fuckass.transitionTotals);
+        //System.out.println(fuckass.transitionTotals);
         System.out.println(fuckass.observations);
-        System.out.println(fuckass.observationTotals);
+        //System.out.println(fuckass.observationTotals);
     }
 }
