@@ -5,16 +5,16 @@ public class Sudi {
     String start;
 
     //list of observations which contain:  list of words to observation #, map of pos to transition # and
-    // next pos
-    List<Map<String, List<Map<String, Double>>>>  list; //observations
-    Map<String, Map<Double, String>> map; //transitions
+    //next pos
+//    List<Map<String, List<Map<String, Double>>>>  list; //observations
+//    Map<String, Map<Double, String>> map; //transitions
 
 
     private Scanner in = new Scanner(System.in);
 
     public Sudi(){
-        list = new ArrayList<>();
-        map = new HashMap<>();
+//        list = new ArrayList<>();
+//        map = new HashMap<>();
     }
 
     public void POSViterbi(String line){
@@ -27,14 +27,12 @@ public class Sudi {
 
         for (String s : sentence){
             double score = 0;
-            for (int i = 0; i < map.size(); i++){
-                Map<String, List<Map<String, Double>>> m = new HashMap<>();
-                for (String tag : transitions){
-                    if (!m.containsKey(tag)){
+                for (String tag : BuildModel.getObservations().keySet()){
+                    if (!.containsKey(tag)){
                         score += unseenScore;
                     }
                 }
-            }
+
 
 
         }

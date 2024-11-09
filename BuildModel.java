@@ -8,9 +8,9 @@ public class BuildModel {
 
     private String start = "#";
     //string1 - current tag; string2 - next tag; double - frequency of transition from current to next
-    private Map<String, Map<String, Double>> transitions;
+    private static Map<String, Map<String, Double>> transitions;
     //string1 - tag; string2 - word categorized as tag; double - frequency of tag appearance for each word
-    private Map<String, Map<String, Double>> observations;
+    private static Map<String, Map<String, Double>> observations;
 
     private Map<String, Double> transitionTotals;
     private Map<String, Double> observationTotals;
@@ -113,11 +113,11 @@ public class BuildModel {
         }
     }
 
-    public Map<String, Map<String, Double>> getObservations() {
+    public static Map<String, Map<String, Double>> getObservations() {
         return observations;
     }
 
-    public Map<String, Map<String, Double>> getTransitions() {
+    public static Map<String, Map<String, Double>> getTransitions() {
         return transitions;
     }
 
