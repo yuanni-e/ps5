@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -146,20 +147,33 @@ public class BuildModel {
 
     public static void main(String[] args) throws IOException{
         BuildModel build = new BuildModel();
-        build.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
+        build.count("texts/brown-train-sentences.txt", "texts/brown-train-tags.txt");
         //fuckass.normalize();
-        System.out.println(build.transitions);
+        //System.out.println(build.transitions);
         //System.out.println(fuckass.transitionTotals);
-        System.out.println(build.observations);
+        //System.out.println(build.observations);
         //System.out.println(fuckass.observationTotals);
         //Scanner in = new Scanner(System.in);
-        BufferedReader r = new BufferedReader(new FileReader("texts/simple-train-sentences.txt"));
+        int wrong = 0;
+        BufferedReader r = new BufferedReader(new FileReader("texts/brown-test-sentences.txt"));
+        BufferedReader t = new BufferedReader(new FileReader("texts/brown-test-tags.txt"));
         String line = r.readLine();
+        String tagline = t.readLine();
+        //System.out.println(tagline);
 
         while (line != null){
             Sudi test = new Sudi();
-            test.POSViterbi(line, build.transitions, build.observations);
+            List<String> tags = test.POSViterbi(line, build.transitions, build.observations);
+            String[] testTags = tagline.split(" ");
+            for (int i = 0; i < tags.size()-1; i++){
+                String tag = tags.get(i+1);
+                if(!tag.equals(testTags[i])){
+                    wrong++;
+                }
+            }
             line = r.readLine();
+            tagline = t.readLine();
         }
+        System.out.println("wrong tags: " + wrong);
     }
 }
