@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class BuildModel {
 
@@ -144,12 +145,21 @@ public class BuildModel {
     }
 
     public static void main(String[] args) throws IOException{
-        BuildModel fuckass = new BuildModel();
-        fuckass.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
+        BuildModel build = new BuildModel();
+        build.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
         //fuckass.normalize();
-        System.out.println(fuckass.transitions);
+        System.out.println(build.transitions);
         //System.out.println(fuckass.transitionTotals);
-        System.out.println(fuckass.observations);
+        System.out.println(build.observations);
         //System.out.println(fuckass.observationTotals);
+        //Scanner in = new Scanner(System.in);
+        BufferedReader r = new BufferedReader(new FileReader("texts/simple-train-sentences.txt"));
+        String line = r.readLine();
+
+        while (line != null){
+            Sudi test = new Sudi();
+            test.POSViterbi(line, build.transitions, build.observations);
+            line = r.readLine();
+        }
     }
 }
