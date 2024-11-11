@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class BuildModel {
 
@@ -14,10 +13,6 @@ public class BuildModel {
     //string1 - tag; string2 - word categorized as tag; double - frequency of tag appearance for each word
     private static Map<String, Map<String, Double>> observations;
 
-    // DELETE RANDOM COMMENTED OUT CODE (DEAD CODE)
-//    private Map<String, Double> transitionTotals;
-//    private Map<String, Double> observationTotals;
-
     public BuildModel(){
         transitions = new HashMap<String, Map<String, Double>>();
         observations = new HashMap<String, Map<String, Double>>();
@@ -25,7 +20,7 @@ public class BuildModel {
 
     // TODO: add more comments in this method
     // TODO: also add JavaDocs (those nice looking comments above methods)
-    public void count(String sentenceFile, String tagFile) throws IOException {
+    public void train(String sentenceFile, String tagFile) throws IOException {
         BufferedReader sentences = null;
         BufferedReader tags = null;
         Map<String, Double> transitionTotals = new HashMap<String, Double>();
@@ -119,41 +114,19 @@ public class BuildModel {
         }
     }
 
-//    public void normalize(){
-//        //normalize transitions map, which is assumed to have counts of appearance of transitions
-//        //the double value in the map is updated
-//        for(String state : transitions.keySet()){
-//            double total = transitionTotals.get(state);
-//            for(String next : transitions.get(state).keySet()){
-//                double tranFreq = transitions.get(state).get(next)/total;
-//                double tranLog = Math.log(tranFreq);
-//                transitions.get(state).put(next, tranLog);
-//            }
-//        }
-//
-//        //normalize observations map, which is assumed to have counts of appearance of observations
-//        for(String state : observations.keySet()){
-//            double total = observationTotals.get(state);
-//            for(String word : observations.get(state).keySet()){
-//                double obFreq = observations.get(state).get(word)/total;
-//                double obLog = Math.log(obFreq);
-//                observations.get(state).put(word, obLog);
-//            }
-//        }
-//    }
 
     // TODO: you never use this
-    public static Map<String, Map<String, Double>> getObservations() {
+    public Map<String, Map<String, Double>> getObservations() {
         return observations;
     }
 
-    public static Map<String, Map<String, Double>> getTransitions() {
+    public Map<String, Map<String, Double>> getTransitions() {
         return transitions;
     }
 
     public static void main(String[] args) throws IOException{
         BuildModel build = new BuildModel();
-        build.count("texts/brown-train-sentences.txt", "texts/brown-train-tags.txt");
+        build.train("texts/brown-train-sentences.txt", "texts/brown-train-tags.txt");
         int wrong = 0;
         BufferedReader r = new BufferedReader(new FileReader("texts/brown-test-sentences.txt"));
         BufferedReader t = new BufferedReader(new FileReader("texts/brown-test-tags.txt"));
@@ -164,7 +137,7 @@ public class BuildModel {
         //System.out.println(tagline);
 
         while (line != null){
-            Sudi test = new Sudi();
+            Viterbi test = new Viterbi();
             List<String> tags = test.POSViterbi(line, build.transitions, build.observations);
             String[] testTags = tagline.split(" ");
             for (int i = 0; i < tags.size()-1; i++){
