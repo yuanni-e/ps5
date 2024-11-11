@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Sudi {
-    private final double unseenScore = -1000.0;
+    private final double unseenScore = -100.0;
     String start = "#";
 
     private Map<String, Double> currScores;
@@ -27,7 +27,7 @@ public class Sudi {
         currScores.put(start, 0.0);
 
 
-        for (int i = 0; i < splitLine.length - 1; i++){ //for each word
+        for (int i = 0; i < splitLine.length; i++){ //for each word
             nextScores = new HashMap<>();
             nextStates = new HashSet<>();
 

@@ -14,6 +14,7 @@ public class BuildModel {
     //string1 - tag; string2 - word categorized as tag; double - frequency of tag appearance for each word
     private static Map<String, Map<String, Double>> observations;
 
+    // DELETE RANDOM COMMENTED OUT CODE (DEAD CODE)
 //    private Map<String, Double> transitionTotals;
 //    private Map<String, Double> observationTotals;
 
@@ -22,6 +23,8 @@ public class BuildModel {
         observations = new HashMap<String, Map<String, Double>>();
     }
 
+    // TODO: add more comments in this method
+    // TODO: also add JavaDocs (those nice looking comments above methods)
     public void count(String sentenceFile, String tagFile) throws IOException {
         BufferedReader sentences = null;
         BufferedReader tags = null;
@@ -139,6 +142,7 @@ public class BuildModel {
 //        }
 //    }
 
+    // TODO: you never use this
     public static Map<String, Map<String, Double>> getObservations() {
         return observations;
     }
@@ -149,15 +153,16 @@ public class BuildModel {
 
     public static void main(String[] args) throws IOException{
         BuildModel build = new BuildModel();
-        build.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
+        build.count("texts/brown-train-sentences.txt", "texts/brown-train-tags.txt");
         int wrong = 0;
-        BufferedReader r = new BufferedReader(new FileReader("texts/simple-test-sentences.txt"));
-        BufferedReader t = new BufferedReader(new FileReader("texts/simple-test-tags.txt"));
+        BufferedReader r = new BufferedReader(new FileReader("texts/brown-test-sentences.txt"));
+        BufferedReader t = new BufferedReader(new FileReader("texts/brown-test-tags.txt"));
         String line = r.readLine();
         String tagline = t.readLine();
+
+        //TODO: get rid of random print statements
         //System.out.println(tagline);
 
-        int count = 1;
         while (line != null){
             Sudi test = new Sudi();
             List<String> tags = test.POSViterbi(line, build.transitions, build.observations);
