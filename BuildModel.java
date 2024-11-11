@@ -37,7 +37,7 @@ public class BuildModel {
                 String[] states = tag.split(" ");
                 sentence = sentence.toLowerCase();
                 String[] words = sentence.split(" ");
-                for(int i=0; i<states.length-1; i++){
+                for(int i=0; i<states.length; i++){
                     String currState;
                     if(i==0){
                         currState = start;
@@ -101,6 +101,8 @@ public class BuildModel {
                     observations.get(state).put(word, obLog);
                 }
             }
+            System.out.println(transitions);
+            System.out.println(observations);
 
         } catch (IOException e) {
             System.out.println(e);
@@ -148,12 +150,6 @@ public class BuildModel {
     public static void main(String[] args) throws IOException{
         BuildModel build = new BuildModel();
         build.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
-        //fuckass.normalize();
-        System.out.println(build.transitions);
-        //System.out.println(fuckass.transitionTotals);
-        System.out.println(build.observations);
-        //System.out.println(fuckass.observationTotals);
-        //Scanner in = new Scanner(System.in);
         int wrong = 0;
         BufferedReader r = new BufferedReader(new FileReader("texts/simple-test-sentences.txt"));
         BufferedReader t = new BufferedReader(new FileReader("texts/simple-test-tags.txt"));
@@ -170,6 +166,7 @@ public class BuildModel {
                 String tag = tags.get(i+1);
                 if(!tag.equals(testTags[i])){
                     wrong++;
+                    System.out.println("incorrect tag: " + tag + " should be " + testTags[i]);
                 }
             }
             //System.out.println(count++);
