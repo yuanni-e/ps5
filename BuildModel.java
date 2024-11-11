@@ -147,20 +147,21 @@ public class BuildModel {
 
     public static void main(String[] args) throws IOException{
         BuildModel build = new BuildModel();
-        build.count("texts/brown-train-sentences.txt", "texts/brown-train-tags.txt");
+        build.count("texts/simple-train-sentences.txt", "texts/simple-train-tags.txt");
         //fuckass.normalize();
-        //System.out.println(build.transitions);
+        System.out.println(build.transitions);
         //System.out.println(fuckass.transitionTotals);
-        //System.out.println(build.observations);
+        System.out.println(build.observations);
         //System.out.println(fuckass.observationTotals);
         //Scanner in = new Scanner(System.in);
         int wrong = 0;
-        BufferedReader r = new BufferedReader(new FileReader("texts/brown-test-sentences.txt"));
-        BufferedReader t = new BufferedReader(new FileReader("texts/brown-test-tags.txt"));
+        BufferedReader r = new BufferedReader(new FileReader("texts/simple-test-sentences.txt"));
+        BufferedReader t = new BufferedReader(new FileReader("texts/simple-test-tags.txt"));
         String line = r.readLine();
         String tagline = t.readLine();
         //System.out.println(tagline);
 
+        int count = 1;
         while (line != null){
             Sudi test = new Sudi();
             List<String> tags = test.POSViterbi(line, build.transitions, build.observations);
@@ -171,6 +172,7 @@ public class BuildModel {
                     wrong++;
                 }
             }
+            //System.out.println(count++);
             line = r.readLine();
             tagline = t.readLine();
         }

@@ -1,0 +1,19 @@
+PRO V DET N .
+PRO V what PRO V .
+PRO V DET N .
+PRO V DET N TO you .
+PRO V DET N .
+Across DET red, white, and blue .
+PRO V DET N .
+You gotta meet our N .
+You know me as DET NP .
+PRO V DET N dressed ADJ .
+Once PRO V PRO N DET ADJ N .
+There V DET N PRO V coming back .
+PRO hang with NP CNJ NP .
+Bring DET Boom PRO V PRO V P .
+PRO V like DET three evolutions of NP .
+PRO V NP, PRO V DET N as PRO MOD tell .
+With N, N, CNJ N .
+NP V hеre, V on PRO N CNJ V DET N .
+Cause PRO V all about DET N CNJ PRO V all about DET N .
